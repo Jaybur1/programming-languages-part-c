@@ -96,43 +96,43 @@ else
 	puts "GOOD"
 end
 
-# #VerticalLine Tests
-# puts "VerticalLine:"
-# c = VerticalLine.new(THREE)
-# if not (c.x == THREE)
-# 	puts "VerticalLine not initialized properly"
-# else
-#	puts "GOOD"
-# end
+#VerticalLine Tests
+puts "VerticalLine:"
+c = VerticalLine.new(THREE)
+if not (c.x == THREE)
+	puts "VerticalLine not initialized properly"
+else
+	puts "GOOD"
+end
 
-# if not (c.eval_prog([]) == c)
-# 	puts "VerticalLine eval_prog should return self"
-# else
-#	puts "GOOD"
-# end
-# if not (c.preprocess_prog == c)
-# 	puts "VerticalLine preprocess_prog should return self"
-# else
-#	puts "GOOD"
-# end
-# c1 = c.shift(THREE,FIVE)
-# if not (c1.x == SIX)
-# 	puts "VerticalLine shift not working properly"
-# else
-#	puts "GOOD"
-# end
-# c2 = c.intersect(VerticalLine.new(THREE))
-# if not ((c2.is_a? VerticalLine) and c2.x == THREE )
-# 	puts "VerticalLine intersect not working properly"
-# else
-#	puts "GOOD"
-# end
-# c3 = c.intersect(VerticalLine.new(FOUR))
-# if not ((c3.is_a? NoPoints))
-# 	puts "VerticalLine intersect not working properly"
-# else
-#	puts "GOOD"
-# end
+if not (c.eval_prog([]) == c)
+	puts "VerticalLine eval_prog should return self"
+else
+	puts "GOOD"
+end
+if not (c.preprocess_prog == c)
+	puts "VerticalLine preprocess_prog should return self"
+else
+	puts "GOOD"
+end
+c1 = c.shift(THREE,FIVE)
+if not (c1.x == SIX)
+	puts "VerticalLine shift not working properly"
+else
+	puts "GOOD"
+end
+c2 = c.intersect(VerticalLine.new(THREE))
+if not ((c2.is_a? VerticalLine) and c2.x == THREE )
+	puts "VerticalLine intersect not working properly"
+else
+	puts "GOOD"
+end
+c3 = c.intersect(VerticalLine.new(FOUR))
+if not ((c3.is_a? NoPoints))
+	puts "VerticalLine intersect not working properly"
+else
+	puts "GOOD"
+end
 
 # #LineSegment Tests
 # puts "LineSegment:"

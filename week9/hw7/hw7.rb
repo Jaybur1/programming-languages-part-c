@@ -214,25 +214,27 @@ class VerticalLine < GeometryValue
   end
 
   def shift(dx,dy)
-    self # shifting no-points is no-points
+    VerticalLine.new(@x + dx)
   end
+
   def intersect other
-    other.intersectNoPoints self # will be NoPoints but follow double-dispatch
+    other.intersectVerticalLine self
   end
+
   def intersectPoint p
-    self # intersection with point and no-points is no-points
+    p.intersectVerticalLine self
   end
+
   def intersectLine line
-    self # intersection with line and no-points is no-points
+    line.intersectVerticalLine self
   end
+
   def intersectVerticalLine vline
-    self # intersection with line and no-points is no-points
+    check_for_no_points(real_close(@x, vline.x))
   end
-  # if self is the intersection of (1) some shape s and (2)
-  # the line containing seg, then we return the intersection of the
-  # shape s and the seg.  seg is an instance of LineSegment
+
   def intersectWithSegmentAsLineResult seg
-    self
+    seg
   end
 end
 
@@ -269,9 +271,7 @@ class LineSegment < GeometryValue
   def intersectVerticalLine vline
     self # intersection with line and no-points is no-points
   end
-  # if self is the intersection of (1) some shape s and (2)
-  # the line containing seg, then we return the intersection of the
-  # shape s and the seg.  seg is an instance of LineSegment
+
   def intersectWithSegmentAsLineResult seg
     self
   end
