@@ -253,27 +253,63 @@ class LineSegment < GeometryValue
   end
 
   def preprocess_prog
-    self # no pre-processing to do here
+    if real_close(@x1, @x2)
+      if real_close(@y1, @y2)
+        Point.new(@x1, @y1)
+      else
+        (@y1 > @y2) ? LineSegment.new(@x2, @y2, @x1, @y1) : self
+      end
+    else
+      @x1 > @x2 ? LineSegment.new(@x2, @y2, @x1, @y1) : self
+    end
   end
 
   def shift(dx,dy)
-    self # shifting no-points is no-points
+    LineSegment.new(@x1 + dx, @y1 + dy, @x2 + dx, @y2 + dy)
   end
+
   def intersect other
-    other.intersectNoPoints self # will be NoPoints but follow double-dispatch
+    other.intersectLineSegment self
   end
   def intersectPoint p
-    self # intersection with point and no-points is no-points
+    p.intersectLineSegment self
   end
   def intersectLine line
-    self # intersection with line and no-points is no-points
+    line.intersectLineSegment self
   end
   def intersectVerticalLine vline
-    self # intersection with line and no-points is no-points
+    vline.intersectLineSegment self
   end
 
   def intersectWithSegmentAsLineResult seg
-    self
+    seg1 = [x1, y1, x2, y2]
+    seg2 = [seg.x1, seg.y1, seg.x2, seg.y2]
+
+    if real_close(x1, x2) # the segments are on a vertical line
+      aXstart, aYstart, aXend, aYend,
+      bXstart, bYstart, bXend, bYend = y1 < seg.y1 ? seg1 + seg2 : seg2 + seg1
+      if real_close(aYend, bYstart)
+        Point.new(aXend, aYend)
+      elsif aYend < bYstart
+        NoPoints.new
+      elsif aYend > bYend
+        LineSegment.new(bXstart, bYstart, bXend, bYend)
+      else
+        LineSegment.new(bXstart, bYstart, aXend, aYend)
+      end
+    else # the segments are on a (non-vertical) line
+      aXstart, aYstart, aXend, aYend,
+      bXstart, bYstart, bXend, bYend = x1 < seg.x1 ? seg1 + seg2 : seg2 + seg1
+      if real_close(aXend, bXstart)
+        Point.new(aXend, aYend)
+      elsif aXend < bXstart
+        NoPoints.new
+      elsif aXend > bXend
+        LineSegment.new(bXstart, bYstart, bXend, bYend)
+      else
+        LineSegment.new(bXstart, bYstart, aXend, aYend)
+      end
+    end
   end
 end
 

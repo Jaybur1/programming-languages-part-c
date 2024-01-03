@@ -179,59 +179,59 @@ end
 #	puts "GOOD"
 # end
 
-# #Intersect Tests
-# puts "Intersect:"
-# i = Intersect.new(LineSegment.new(-ONE,-TWO,THREE,FOUR), LineSegment.new(THREE,FOUR,-ONE,-TWO))
-# i1 = i.preprocess_prog.eval_prog([])
-# if not (i1.x1 == -ONE and i1.y1 == -TWO and i1.x2 == THREE and i1.y2 == FOUR)
-# 	puts "Intersect eval_prog should return the intersect between e1 and e2"
-# else
-#	puts "GOOD"
-# end
+#Intersect Tests
+puts "Intersect:"
+i = Intersect.new(LineSegment.new(-ONE,-TWO,THREE,FOUR), LineSegment.new(THREE,FOUR,-ONE,-TWO))
+i1 = i.preprocess_prog.eval_prog([])
+if not (i1.x1 == -ONE and i1.y1 == -TWO and i1.x2 == THREE and i1.y2 == FOUR)
+	puts "Intersect eval_prog should return the intersect between e1 and e2"
+else
+	puts "GOOD"
+end
 
-# #Var Tests
-# puts "Var:"
-# v = Var.new("a")
-# v1 = v.eval_prog([["a", Point.new(THREE,FIVE)]])
-# if not ((v1.is_a? Point) and v1.x == THREE and v1.y == FIVE)
-# 	puts "Var eval_prog is not working properly"
-# else
-#	puts "GOOD"
-# end
-# if not (v.preprocess_prog == v)
-# 	puts "Var preprocess_prog should return self"
-# else
-#	puts "GOOD"
-# end
+#Var Tests
+puts "Var:"
+v = Var.new("a")
+v1 = v.eval_prog([["a", Point.new(THREE,FIVE)]])
+if not ((v1.is_a? Point) and v1.x == THREE and v1.y == FIVE)
+	puts "Var eval_prog is not working properly"
+else
+	puts "GOOD"
+end
+if not (v.preprocess_prog == v)
+	puts "Var preprocess_prog should return self"
+else
+	puts "GOOD"
+end
 
-# #Let Tests
-# puts "Let:"
-# l = Let.new("a", LineSegment.new(-ONE,-TWO,THREE,FOUR),
-#              Intersect.new(Var.new("a"),LineSegment.new(THREE,FOUR,-ONE,-TWO)))
-# l1 = l.preprocess_prog.eval_prog([])
-# if not (l1.x1 == -ONE and l1.y1 == -TWO and l1.x2 == THREE and l1.y2 == FOUR)
-# 	puts "Let eval_prog should evaluate e2 after adding [s, e1] to the environment"
-# else
-#	puts "GOOD"
-# end
+#Let Tests
+puts "Let:"
+l = Let.new("a", LineSegment.new(-ONE,-TWO,THREE,FOUR),
+             Intersect.new(Var.new("a"),LineSegment.new(THREE,FOUR,-ONE,-TWO)))
+l1 = l.preprocess_prog.eval_prog([])
+if not (l1.x1 == -ONE and l1.y1 == -TWO and l1.x2 == THREE and l1.y2 == FOUR)
+	puts "Let eval_prog should evaluate e2 after adding [s, e1] to the environment"
+else
+	puts "GOOD"
+end
 
-# #Let Variable Shadowing Test
-# l2 = Let.new("a", LineSegment.new(-ONE, -TWO, THREE, FOUR),
-#               Let.new("b", LineSegment.new(THREE,FOUR,-ONE,-TWO), Intersect.new(Var.new("a"),Var.new("b"))))
-# l2 = l2.preprocess_prog.eval_prog([["a",Point.new(0,0)]])
-# if not (l2.x1 == -ONE and l2.y1 == -TWO and l2.x2 == THREE and l2.y2 == FOUR)
-# 	puts "Let eval_prog should evaluate e2 after adding [s, e1] to the environment"
-# else
-#	puts "GOOD"
-# end
+#Let Variable Shadowing Test
+l2 = Let.new("a", LineSegment.new(-ONE, -TWO, THREE, FOUR),
+              Let.new("b", LineSegment.new(THREE,FOUR,-ONE,-TWO), Intersect.new(Var.new("a"),Var.new("b"))))
+l2 = l2.preprocess_prog.eval_prog([["a",Point.new(0,0)]])
+if not (l2.x1 == -ONE and l2.y1 == -TWO and l2.x2 == THREE and l2.y2 == FOUR)
+	puts "Let eval_prog should evaluate e2 after adding [s, e1] to the environment"
+else
+	puts "GOOD"
+end
 
 
-# #Shift Tests
-# puts "Shift:"
-# s = Shift.new(THREE,FIVE,LineSegment.new(-ONE,-TWO,THREE,FOUR))
-# s1 = s.preprocess_prog.eval_prog([])
-# if not (s1.x1 == TWO and s1.y1 == THREE and s1.x2 == SIX and s1.y2 == 9)
-# 	puts "Shift should shift e by dx and dy"
-# else
-#	puts "GOOD"
-# end
+#Shift Tests
+puts "Shift:"
+s = Shift.new(THREE,FIVE,LineSegment.new(-ONE,-TWO,THREE,FOUR))
+s1 = s.preprocess_prog.eval_prog([])
+if not (s1.x1 == TWO and s1.y1 == THREE and s1.x2 == SIX and s1.y2 == 9)
+	puts "Shift should shift e by dx and dy"
+else
+	puts "GOOD"
+end
